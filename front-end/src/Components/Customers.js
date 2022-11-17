@@ -20,7 +20,7 @@ export default function Customers() {
   }, [customers]);
   
 
-  const allCustomers = customers.map((customer, id) => {
+  const allCustomers = customers?.map((customer, id) => {
     return <div key={id}>{customer.name}</div>;
   });
 
