@@ -7,24 +7,16 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import About from "./Components/About";
 import Dashboard from "./Components/Dashboard";
-import Reviews from "./Components/Reviews";
 import Unauthorized from './Components/Unauthorized';
 import RequireAuth from './Components/RequireAuth';
 
 // PAGES
 import Home from "./Pages/Home";
 import Error from "./Pages/Error";
-import Index from "./Pages/Index";
 import Order from "./Pages/Order";
-import History from "./Pages/OrderHistory";
 import PaymentFinalized from "./Pages/PaymentFinalized";
-import Budget from "./Pages/Budget";
 import PaymentInfo from "./Pages/PaymentInfo";
-
-// TOASTIFY
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
-//toast.configure();
+import Survey from "./Pages/Survey";
 
 const ROLES = {
   'User': 2,
@@ -32,36 +24,6 @@ const ROLES = {
 }
 
 function App() {
-  //
-  //const API_URL = process.env.REACT_APP_API_URL;
-
-
-  // const checkAuthenticated = async () => {
-  //   try {
-  //     const res = await fetch(`${API_URL}/auth/verify`, {
-  //       method: "POST",
-  //       headers: { jwt_token: localStorage.token }
-  //     });
-
-  //     const parseRes = await res.json();
-  //     // console.log(parseRes)
-  //     parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   //checkAuthenticated();
-  // }, []);
-
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // // const setAuth = boolean => {
-  // //   setIsAuthenticated(boolean);
-  // // };
-
-  // // console.log('isAuthenticated:', isAuthenticated)
 
   return (
     <Routes>
@@ -77,15 +39,14 @@ function App() {
         {/* PROTECTED ROUTES */}
         <Route element={<RequireAuth allowedRoles={[ROLES.User]}  />}>
           <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-
-        {/* <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/pickabudget" element={<Budget />} />
-        <Route path="/paymentdone" element={<PaymentFinalized />} />
-        <Route path="/testimonials" element={<Reviews />} />
-        <Route path="/paymentInfo" element={<PaymentInfo />} /> */}
+          <Route path="/order" element={<Order />} />
+          <Route path="/paymentdone" element={<PaymentFinalized />} />
+          <Route path="/paymentInfo" element={<PaymentInfo />} />
+          <Route
+              path="/survey" element={<Survey />}
+            />
+          </Route>
+        
       </Route>
     </Routes>
   );

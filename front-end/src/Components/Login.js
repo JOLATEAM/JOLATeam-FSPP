@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
 import { toast } from "react-toastify";
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Login = () => {
@@ -48,17 +49,6 @@ const Login = () => {
         }
       );
       console.log(JSON.stringify(response?.data));
-      // const parseRes = await response.json();
-      // console.log(parseRes);
-
-      // if (parseRes.jwtToken) {
-      //   localStorage.setItem("token", parseRes.jwtToken);
-      //   setAuth(true);
-      //   toast.success("Logged in Successfully");
-      // } else {
-      //   setAuth(false);
-      //   toast.error(parseRes);
-      // }
 
       const jwtToken = JSON.stringify(response?.data.jwtToken);
       const firstName = response?.data?.firstName;
@@ -66,9 +56,7 @@ const Login = () => {
       const userName = response?.data?.userName;
       const userRole = response?.data?.userRole;
       setAuth({ jwtToken, firstName, lastName, userName, userRole });
-      // setUser('');
-      // setPwd('');
-      //setInputs('');
+      setInputs('');
         
       navigate(from, { replace: true });
     } catch (err) {
@@ -78,7 +66,7 @@ const Login = () => {
   };
 
   return (
-<div className="flex-row">
+    <div className="flex-row">
       <div className="grid grid-cols-2 grid-flow-row auto-rows-max">
         <div className="py-40">
           <div className="text-center  ">
@@ -140,8 +128,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-
-    
   );
 };
 

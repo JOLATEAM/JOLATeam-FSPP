@@ -8,23 +8,23 @@ const flash = require("express-flash");
 const session = require("express-session");
 require("dotenv").config();
 
-
 const usersController = require("./controllers/usersController");
 const reviewsController = require("./controllers/reviewsController.js");
-const ordersControllers = require("./controllers/ordersController");
-
+const ordersController = require("./controllers/ordersController");
+const menusController = require("./controllers/menusController");
+const platesController = require("./controllers/platesController");
 //CONFIG
 const app = express();
 
 // const initializePassport = require("./passportConfig");
 
-// initializePassport(passport);
+initializePassport(passport);
 
 app.use(cors());
 app.use(express.json());
 app.use("/users", usersController);
 app.use("/reviews", reviewsController);
-app.use("/orders", ordersControllers);
+app.use("/orders", ordersController);
 
 //ROUTES
 app.use("/auth", require("./routes/jwtAuth"));
@@ -34,6 +34,42 @@ app.get("/", (req, res) => {
   res.send("Welcome to SMAK APP");
   //res.render("index");
 });
+
+app.get("/login", checkAuthenticated, (req, res) => {
+  // flash sets a messages variable. passport sets the error message
+  return res.redirect("/dashboard");
+});
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
+
+function checkAuthenticated(req, res, next) {
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    return res.redirect("/dashboard");
+  }
+  next();
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
+
+app.get("/dashboard", (req, res) => {
+  res.send("Welcome to Dashboard");
+  //res.render("index");
+});
+
+const { formatted } = require("./validators/yelpvalidators");
 
 app.get("/yelp/:location", async (req, res) => {
   const { location } = req.params;
@@ -50,7 +86,8 @@ app.get("/yelp/:location", async (req, res) => {
       return JSON.stringify(response.data, null, 2);
     })
     .then(function (jsonResponse) {
-      res.send(jsonResponse);
+      let parsed = JSON.parse(jsonResponse).businesses;
+      res.send(formatted(parsed));
     })
     .catch(function (error) {
       console.log(error);
