@@ -32,14 +32,14 @@ const Dashboard = () => {
             </b>
           </span>
           <span className="block text-4xl md:text-6xl text-gray-600">
-            Welcome back <b className="text-orange-500">{auth?.firstName} </b>
+            Welcome back <b className="text-orange-600 uppercase">{auth?.firstName} </b>
           </span>
         </h2>
         <div className="mt-12 inline-flex rounded-md shadow">
         <button
           onClick={e => logout(e)}
           type="button"
-          className="py-3 px-6 bg-orange-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+          className="py-3 px-6 bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-3xl "
         >
           Logout
         </button>
