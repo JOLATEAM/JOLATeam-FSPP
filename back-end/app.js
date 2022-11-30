@@ -8,19 +8,6 @@ const flash = require("express-flash");
 const session = require("express-session");
 require("dotenv").config();
 
-const { Pool } = require("pg");
-
-const isProduction = process.env.NODE_ENV === "production";
-
-const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
-const credentials = {
-  user: "postgres",
-  host: "localhost",
-  database: "dev_smak",
-  password: "1088291521",
-  port: 5432,
-};
-
 const usersController = require("./controllers/usersController");
 const reviewsController = require("./controllers/reviewsController.js");
 const ordersController = require("./controllers/ordersController");

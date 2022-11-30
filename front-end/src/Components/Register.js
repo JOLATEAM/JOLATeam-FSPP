@@ -56,11 +56,11 @@ const Register = ({ setAuth }) => {
             <form >
             <div className="grid grid-cols-2 grid-flow-row gap-2">
               <div className="my-2 ">
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">First name</label>
+                <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">First name</label>
                 <input 
                   type="text" 
-                  name="username" 
-                  id="username" 
+                  name="firstname" 
+                  id="firstname" 
                   className="mt-1 p-2 block w-full rounded-md border-gray-300 border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
                   placeholder=""
                   value={firstname}
@@ -105,11 +105,11 @@ const Register = ({ setAuth }) => {
               />  
             </div> 
             <div className="my-2 col-span-3 sm:col-span-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Verify Password</label>
+              <label htmlFor="password2" className="block text-sm font-medium text-gray-700">Verify Password</label>
               <input 
                 type="password" 
-                name="password" 
-                id="password" 
+                name="password2" 
+                id="password2" 
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
                 placeholder=""
                 value={password2}

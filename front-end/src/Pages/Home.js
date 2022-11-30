@@ -62,11 +62,11 @@ export default function Home() {
             <div class="flex flex-wrap -m-1 md:-m-2">
               {restaurants.map((restaurant, i) => {
                 return (
-                  <div class="flex flex-wrap w-1/3" key={i}>
-                    <div class="w-full p-1 md:p-2">
+                  <div className="flex flex-wrap w-1/3" key={i}>
+                    <div className="w-full p-1 md:p-2">
                       <img
                         alt="gallery"
-                        class="block object-cover object-center w-full h-full rounded-lg"
+                        className="block object-cover object-center w-full h-full rounded-lg"
                         src={restaurant.image_url}
                       />
                     </div>

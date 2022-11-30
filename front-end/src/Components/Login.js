@@ -1,11 +1,23 @@
-import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useRef, useState, useEffect } from "react";
+import useAuth from '../hooks/useAuth';
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
+import axios from "axios";
 import { toast } from "react-toastify";
 
-const Login = ({ setAuth }) => {
+const API_URL = process.env.REACT_APP_API_URL;
 
-  const API_URL = process.env.REACT_APP_API_URL;
+const Login = () => {
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard";
+
+  const userRef = useRef();
+  useEffect(() => {
+      userRef.current.focus();
+  }, [])
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -17,36 +29,44 @@ const Login = ({ setAuth }) => {
   const onChange = e =>
     setInputs({ ...inputs, [e.target.name]: e.target.value });
 
-  const onSubmitForm = async e => {
+  const onSubmitForm = async (e) => {
     e.preventDefault();
+
     try {
-      const body = { username, password };
-      const response = await fetch(`${API_URL}/auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(body)
+      //const body = { username, password };
+      const response = await axios.post(`${API_URL}/auth/login`,
+        //{
+          // method: "POST",
+          // headers: {
+          //   "Content-type": "application/json"
+          // },
+          // body: JSON.stringify(body)
+        //}
+        JSON.stringify({ username, password }),
+        {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: false
         }
       );
+      console.log(JSON.stringify(response?.data));
 
-      const parseRes = await response.json();
-
-      if (parseRes.jwtToken) {
-        localStorage.setItem("token", parseRes.jwtToken);
-        setAuth(true);
-        toast.success("Logged in Successfully");
-      } else {
-        setAuth(false);
-        toast.error(parseRes);
-      }
+      const jwtToken = JSON.stringify(response?.data.jwtToken);
+      const firstName = response?.data?.firstName;
+      const lastName = response?.data?.lastName;
+      const userName = response?.data?.userName;
+      const userRole = response?.data?.userRole;
+      setAuth({ jwtToken, firstName, lastName, userName, userRole });
+      setInputs('');
+        
+      navigate(from, { replace: true });
     } catch (err) {
       console.error(err.message);
+      
     }
   };
 
   return (
-<div className="flex-row">
+    <div className="flex-row">
       <div className="grid grid-cols-2 grid-flow-row auto-rows-max">
         <div className="py-40">
           <div className="text-center  ">
@@ -62,6 +82,7 @@ const Login = ({ setAuth }) => {
                 id="username" 
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
                 placeholder=""
+                ref={userRef}
                 value={username}
                 onChange={e => onChange(e)}
               />
@@ -107,8 +128,6 @@ const Login = ({ setAuth }) => {
         </div>
       </div>
     </div>
-
-    
   );
 };
 
