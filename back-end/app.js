@@ -48,28 +48,6 @@ app.get("/", (req, res) => {
   //res.render("index");
 });
 
-<<<<<<< HEAD
-app.get("/yelp/:location", async (req, res) => {
-  const { location } = req.params;
-  const config = {
-    method: "get",
-    url: `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${location}&limit=9`,
-    headers: {
-      Authorization: `Bearer ${process.env.YELP_API_KEY}`,
-      "Accept-Encoding": false,
-    },
-  };
-  axios(config)
-    .then(function (response) {
-      return JSON.stringify(response.data, null, 2);
-    })
-    .then(function (jsonResponse) {
-      res.send(jsonResponse);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-=======
 app.get("/login", checkAuthenticated, (req, res) => {
   // flash sets a messages variable. passport sets the error message
   return res.redirect("/dashboard");
@@ -102,7 +80,6 @@ function checkNotAuthenticated(req, res, next) {
 app.get("/dashboard", (req, res) => {
   res.send("Welcome to Dashboard");
   //res.render("index");
->>>>>>> main
 });
 
 const { formatted } = require("./validators/yelpvalidators");
