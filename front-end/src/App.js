@@ -29,7 +29,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* PUBLIC ROUTES */}
-        <Route path="index" element={<Home />} />
+        <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/about" element={<About />} />
@@ -42,10 +42,8 @@ function App() {
           <Route path="/order" element={<Order />} />
           <Route path="/paymentdone" element={<PaymentFinalized />} />
           <Route path="/paymentInfo" element={<PaymentInfo />} />
-          <Route
-              path="/survey" element={<Survey />}
-            />
-          </Route>
+          <Route path="/survey" element={<Survey />} />
+        </Route>
         
       </Route>
     </Routes>

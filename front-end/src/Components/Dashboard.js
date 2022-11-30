@@ -1,33 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
+import { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 import useAuth from "../hooks/useAuth";
+
 import { toast } from "react-toastify";
 
-const Dashboard = ({ setAuth }) => {
+const Dashboard = () => {
+  const { setAuth } = useContext(AuthContext);
   const { auth } = useAuth();
   const navigate = useNavigate();
-
-  const [name, setName] = useState("");
-
-  const getProfile = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/dashboard/", {
-        method: "POST",
-        headers: { jwt_token: localStorage.token }
-      });
-
-      const parseData = await res.json();
-      setName(parseData.user_name);
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
 
   const logout = async e => {
     e.preventDefault();
     try {
-      localStorage.removeItem("token");
       setAuth({});
       navigate('/home');
       toast.success("Logout successfully");
@@ -35,11 +21,7 @@ const Dashboard = ({ setAuth }) => {
       console.error(err.message);
     }
   };
-
-  useEffect(() => {
-    //getProfile();
-  }, []);
-
+  
   return (
     <div className="h-full bg-yellow-200">
       <div className="text-center w-full mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 z-20">

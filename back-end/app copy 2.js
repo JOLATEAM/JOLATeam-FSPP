@@ -4,7 +4,6 @@ const cors = require("cors");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const flash = require("express-flash");
 const session = require("express-session");
 require("dotenv").config();
 
@@ -13,8 +12,13 @@ const reviewsController = require("./controllers/reviewsController.js");
 const ordersController = require("./controllers/ordersController");
 const menusController = require("./controllers/menusController");
 const platesController = require("./controllers/platesController");
+
 //CONFIG
 const app = express();
+
+// const initializePassport = require("./passportConfig");
+
+//initializePassport(passport);
 
 app.use(cors());
 app.use(express.json());
@@ -28,7 +32,6 @@ app.use("/dashboard", require("./routes/dashboard"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to SMAK APP");
-  //res.render("index");
 });
 
 const { formatted } = require("./validators/yelpvalidators");
