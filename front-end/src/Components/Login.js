@@ -34,14 +34,9 @@ const Login = () => {
 
     try {
       //const body = { username, password };
+      console.log(API_URL)
       const response = await axios.post(`${API_URL}/auth/login`,
-        //{
-          // method: "POST",
-          // headers: {
-          //   "Content-type": "application/json"
-          // },
-          // body: JSON.stringify(body)
-        //}
+        
         JSON.stringify({ username, password }),
         {
             headers: { 'Content-Type': 'application/json' },
@@ -105,7 +100,7 @@ const Login = () => {
                 className="rounded-md border border-gray-300 bg-orange-500 py-2 px-4 text-md font-medium leading-4 text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 onClick={onSubmitForm}  
               >
-                  Submit
+                Submit
               </button>
             </div> 
             </form>
