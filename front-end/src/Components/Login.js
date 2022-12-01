@@ -3,7 +3,8 @@ import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -43,25 +44,46 @@ const Login = () => {
             withCredentials: false
         }
       );
-      console.log(JSON.stringify(response?.data));
+      //console.log(JSON.stringify(response?.data));
 
       const jwtToken = JSON.stringify(response?.data.jwtToken);
       const firstName = response?.data?.firstName;
       const lastName = response?.data?.lastName;
       const userName = response?.data?.userName;
       const userRole = response?.data?.userRole;
+      
+      // Setting the auth state
       setAuth({ jwtToken, firstName, lastName, userName, userRole });
       setInputs('');
-        
-      navigate(from, { replace: true });
+      // Setting the success notification
+      toast.success("Login successful!", 
+        {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        }, 
+        // {
+        //   onClose: () => navigate(from, { replace: true })
+        // }
+      );
+
+      // After validate credentials, proceed to redirect to Dashboard
+      setTimeout(() => {
+        navigate(from, { replace: true });
+      }, 1050);
+
     } catch (err) {
-      console.error(err.message);
-      
+      console.error(err);
+      // Setting the error notification
+      toast.error(err.response.data, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+      }); 
     }
   };
 
   return (
     <div className="flex-row">
+      <ToastContainer />
       <div className="grid grid-cols-2 grid-flow-row auto-rows-max">
         <div className="py-40">
           <div className="text-center  ">
