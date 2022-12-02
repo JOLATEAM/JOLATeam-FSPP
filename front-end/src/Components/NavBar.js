@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/SmakLogos/Transparent_Logo2_01.png";
+import useAuth from "../hooks/useAuth";
+import { Dropdown } from "flowbite-react";
 
 export default function NavBar() {
+  const { auth } = useAuth();
+  console.log('auth:', auth)
   return (
     <header>
-      <nav className="py-6 px-4 bg-teal-500 sticky top-0 z-50 border-gray-200  lg:px-6 py-2.5 ">
+      <nav className="py-6 px-4 bg-smaksalmon sticky top-0 z-50 border-gray-200  lg:px-6 py-2.5 ">
         <div className="flex flex-wrap justify-between py-2 items-center mx-auto max-w-screen-xl">
           <a href="/" className="flex items-center">
             <img src={logo} className="mr-3 h-6 sm:h-9" alt=" Logo" />
@@ -14,6 +18,24 @@ export default function NavBar() {
             </span>
           </a>
           <div className="flex items-center lg:order-2">
+          {/* <Dropdown
+  label="Dropdown button"
+  dismissOnClick={false}
+>
+  <Dropdown.Item>
+    Dashboard
+  </Dropdown.Item>
+  <Dropdown.Item>
+    Settings
+  </Dropdown.Item>
+  <Dropdown.Item>
+    Earnings
+  </Dropdown.Item>
+  <Dropdown.Item>
+    Sign out
+  </Dropdown.Item>
+          </Dropdown> */}
+
             <a
               href="/login"
               className="text-gray-800 bg-gray-300 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-3xl text-sm px-6 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"

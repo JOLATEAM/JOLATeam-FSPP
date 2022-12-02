@@ -6,6 +6,7 @@ import { AuthProvider } from './context/AuthProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
+import 'flowbite';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

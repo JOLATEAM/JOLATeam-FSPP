@@ -1,22 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import useAuth from "../hooks/useAuth";
 
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Dashboard = () => {
   const { setAuth } = useContext(AuthContext);
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = "/";
 
   const logout = async e => {
     e.preventDefault();
     try {
       setAuth({});
-      navigate('/home');
-      toast.success("Logout successfully");
+      
+      toast.success("Logout successfully", 
+        {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        },
+      )
+
+      // After validate credentials, proceed to redirect to /
+      setTimeout(() => {
+        navigate('/');
+      }, 1050);
+     
     } catch (err) {
       console.error(err.message);
     }
@@ -24,6 +37,7 @@ const Dashboard = () => {
   
   return (
     <div className="h-full bg-yellow-200">
+      <ToastContainer />
       <div className="text-center w-full mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 z-20">
         <h2 className=" font-extrabold text-black sm:text-4xl">
           <span className="block  text-gray-500 text-4xl md:text-6xl my-20 py-0 leading-0">

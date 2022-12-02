@@ -1,10 +1,32 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, { useRef, useState, useEffect } from "react";
+import useAuth from '../hooks/useAuth';
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import logo from "../assets/SmakLogos/Transparent_Logo2_04.png";
 
-const Register = ({ setAuth }) => {
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-  const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
+
+const Register = () => {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/login";
+  
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  //const [user, setUser] = useState('');
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, [])
+
   const [inputs, setInputs] = useState({
     firstname: "",
     lastname: "",
@@ -20,33 +42,66 @@ const Register = ({ setAuth }) => {
 
   const onSubmitForm = async e => {
     e.preventDefault();
-    try {
-      const body = { firstname, lastname, username, password, password2 };
-      const response = await fetch(`${API_URL}/auth/register`, {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(body)
-        }
-      );
-      const parseRes = await response.json();
 
-      if (parseRes.jwtToken) {
-        localStorage.setItem("token", parseRes.jwtToken);
-        setAuth(true);
-        toast.success("Register Successfully");
+    try {
+      const response = await axios.post(`${API_URL}/auth/register`,
+        
+        JSON.stringify({ firstname, lastname, username, password, password2 }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: false
+        }
+
+      );
+      //console.log(response.data)
+      //const parseResponse = await response.data.json();
+      console.log(JSON.stringify(response?.data));
+      
+      if (response?.data.jwtToken) {
+        //localStorage.setItem("token", parseRes.jwtToken);
+        //setAuth(true);
+        //toast.success("Register Successfully");
+        setInputs('');
+        // Setting the success notification
+        toast.success("Register Successfully!", 
+          {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+          },
+        );
+
+        // After validate credentials, proceed to redirect to Dashboard
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 2500);
+
       } else {
-        setAuth(false);
-        toast.error(parseRes);
+        //setAuth(false);
+        //toast.error(parseRes);
+        toast.error('error', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        });
       }
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
+      //console.error(err.message);
+      // if (!err?.response) {
+      //   setErrMsg('No Server Response');
+      // } else if (err.response?.status === 409) {
+      //     setErrMsg('Username Taken');
+      // } else {
+      //     setErrMsg('Registration Failed')
+      // }
+
+
+      errRef.current.focus();
     }
   };
 
   return (
     <div className="flex-row">
+      <ToastContainer />
       <div className="grid grid-cols-2 grid-flow-row auto-rows-max">
         <div className="py-40">
           <div className="text-center  ">
@@ -63,6 +118,7 @@ const Register = ({ setAuth }) => {
                   id="firstname" 
                   className="mt-1 p-2 block w-full rounded-md border-gray-300 border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
                   placeholder=""
+                  ref={userRef}
                   value={firstname}
                   onChange={e => onChange(e)}
                 />
@@ -138,45 +194,28 @@ const Register = ({ setAuth }) => {
             
           </div>
         </div>
-        <div className="">
-          <div>
-            
+        <div className="p-8">
+          <div className="h-full p-20 bg-[url('https://images.unsplash.com/photo-1652862730784-bb2a6e862514?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1400&q=80')] bg-opacity-75 ">
+            <div className="h-full p-[28px] bg-white bg-opacity-75 rounded-md text-center">
+              <div className="flex-row">
+                <h1 className="p-4 text-xl font-extrabold leading-tight tracking-tight bg-gray-600 text-white rounded-md md:text-4xl dark:text-white uppercase">
+                  Not sure what to eat today?
+                </h1> 
+              </div>  
+              <div className="flex-row items-center" >
+                <a href="#" className="mb-6 text-2xl">
+                  <img className="w-60 h-60 mx-auto " src={logo} alt="SMAK logo"/>    
+                </a>
+                <h2 className=" my-4 font-bold leading-tight tracking-tight text-smaksalmon text-6xl dark:text-white">
+                <b className="font-extrabold ">SMAK</b> is here to help!
+                </h2>
+              </div>  
+            </div>  
           </div>
         </div>
       </div>
     </div>
 
-    // <Fragment>
-    //   <h1 className="mt-5 text-center">Register</h1>
-    //   <form onSubmit={onSubmitForm}>
-    //     <input
-    //       type="text"
-    //       name="email"
-    //       value={email}
-    //       placeholder="email"
-    //       onChange={e => onChange(e)}
-    //       className="form-control my-3"
-    //     />
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       value={password}
-    //       placeholder="password"
-    //       onChange={e => onChange(e)}
-    //       className="form-control my-3"
-    //     />
-    //     <input
-    //       type="text"
-    //       name="name"
-    //       value={name}
-    //       placeholder="name"
-    //       onChange={e => onChange(e)}
-    //       className="form-control my-3"
-    //     />
-    //     <button className="btn btn-success btn-block">Submit</button>
-    //   </form>
-    //   <Link to="/login">login</Link>
-    // </Fragment>
   );
 };
 
