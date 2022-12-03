@@ -9,7 +9,7 @@ export default function NavBar() {
   console.log('auth:', auth)
   return (
     <header>
-      <nav className="py-6 px-4 bg-smaksalmon sticky top-0 z-50 border-gray-200  lg:px-6 py-2.5 ">
+      <nav className="py-6 px-4 bg-[#ffe1a8] sticky top-0 z-50 border-gray-200  lg:px-6 py-2.5 ">
         <div className="flex flex-wrap justify-between py-2 items-center mx-auto max-w-screen-xl">
           <a href="/" className="flex items-center">
             <img src={logo} className="mr-3 h-6 sm:h-9" alt=" Logo" />
