@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Search from "../Components/Search";
 import Reviews from "../Components/Reviews";
-import About from "../Components/About";
 import banner from "../assets/Food_Images/Banner_01.png";
 import HowitWorks from "../Components/HowitWorks";
+import Buttons from "../Components/Buttons";
+import banner2 from"../assets/Food_Images/Banner_05.png"
+
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -35,7 +37,7 @@ export default function Home() {
         <div className="text-center w-full mx-auto  px-4 sm:px-6 lg:py-16 lg:px-8 z-20">
           <h2 className="font-extrabold text-black sm:text-4xl">
             <span className="text-gray-500 text-6xl md:text-6xl italic my-20 py-0 leading-0">
-              <b className=" absolute text-5xl text-white top-1/3 left-50 -translate-x-1/2 -translate-y-1/2 px-4 py-2 mt-2 md:text-8xl bg-smakorange no-italic rounded-md shadow font-['Darker Grotesque']">
+              <b className=" absolute text-5xl text-white top-1/3 left-50 -translate-x-1/2 -translate-y-40 px-4 py-2 mt-2 md:text-7xl bg-smakorange no-italic rounded-md shadow font-['Darker Grotesque']">
                 Welcome To SMAK
               </b>
             </span>
@@ -74,8 +76,9 @@ export default function Home() {
 
       )}
       <HowitWorks/>
-       < Reviews/>
-       <About/>
+       <Buttons/> 
+       {/* < Reviews/> */}
+       <img src={banner2} className= "w-full" alt="" /> 
     </div>
   );
 }

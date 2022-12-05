@@ -5,12 +5,12 @@ import logo from "../assets/SmakLogos/Transparent_Logo2_01.png";
 export default function NavBar() {
   return (
     <header>
-      <nav className="py-6 px-4 sticky top-0 z-50 border-gray-200  lg:px-6 py-2.5 ">
-        <div className="flex flex-wrap justify-between py-2 items-center mx-auto max-w-screen-xl">
-          <a href="/" className="flex items-center">
+      <nav className="py-6 px-4 sticky top-0 z-50 border-smakHighlight  lg:px-6 py-2.5 ">
+        <div className="flex flex-wrap justify-between py-2 items-center mx-auto max-w-screen-xl ">
+          <a href="/" className="flex items-center ">
 
             <img src={logo} className="mr-3 h-6 sm:h-14" alt="Logo" />
-            <span class="self-center text-4xl font-semibold whitespace-nowrap dark:text-white font-['Fraunces']">
+            <span class=" text-5xl  font-semibold whitespace-nowrap dark:text-white text-smakorange font-['Fraunces']">
 
               SMAK
             </span>
