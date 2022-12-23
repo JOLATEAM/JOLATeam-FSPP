@@ -12,6 +12,8 @@ export default function Reviews(props) {
     };
     importFlowbiteFunc("https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"); // here goes your path to a local flowbite.js you want to import
   }, []);
+  
+  console.log(reviews)
 
   return (
     <section className="text-center w-full">
@@ -25,7 +27,7 @@ export default function Reviews(props) {
       >
         {(reviews) ? (
         <div className="relative h-96 overflow-hidden rounded-0 ">
-          {reviews.map((review, i) => {
+          reviews.map((review, i) => {
             return (
               <div
                 key={i}
@@ -72,7 +74,7 @@ export default function Reviews(props) {
                 </section>
               </div>
             );
-          })}
+          })
         </div>
         ) : (
         <div className="p-6">No Reviews to display</div>
