@@ -23,6 +23,7 @@ export default function Reviews(props) {
         className="relative flowbite bg-gray-200"
         data-carousel="static"
       >
+        {(reviews) ? (
         <div className="relative h-96 overflow-hidden rounded-0 ">
           {reviews.map((review, i) => {
             return (
@@ -73,6 +74,9 @@ export default function Reviews(props) {
             );
           })}
         </div>
+        ) : (
+        <div className="p-6">No Reviews to display</div>
+        )}
         <div className="grid grid-cols-2 ">
           <div className="relative ">
             <button
